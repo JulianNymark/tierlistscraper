@@ -8,7 +8,7 @@ url = 'http://www.heartharena.com/tierlist'
 
 soup = ""
 
-tierfile = './tierlist.html'
+tierfile = './tierlist.json'
 tierlist_html = Path(tierfile)
 
 if os.path.isfile(tierfile) and os.stat(tierfile).st_size > 0:
@@ -33,11 +33,11 @@ else:
     f.write(json.dumps(card_values))
 
 print("\n#### pick these:\n")
-for name, value in card_values.items():
+for name, value in sorted(card_values.items(), key=lambda tup: tup[1]):
     if value <= 10:
         print(name, value)
 
 print("\n#### absolute garbage (do not touch):\n")
-for name, value in card_values.items():
+for name, value in sorted(card_values.items(), key=lambda tup: tup[1], reverse=True):
     if value >= 100:
         print(name, '\t', value)
